@@ -7,6 +7,9 @@ NewsPulse is a news website built using Nextjs, reactjs, tailwindcss, bing news 
 ## Demo
 
 [https://newspulse.vercel.app/](https://newspulse.vercel.app/)
+![image](https://user-images.githubusercontent.com/61316762/226770596-cd05aebb-a645-4da3-b1ec-208bb10c8e2e.png)
+
+![image](https://user-images.githubusercontent.com/61316762/226770611-626ec4c3-784d-400c-9c8b-4fee9d6b8cea.png)
 
 ## Features
 
