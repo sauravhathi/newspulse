@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import Image from 'next/image'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import moment from 'moment';
 import axios from 'axios';
 import NodeCache from "node-cache";
@@ -100,7 +100,6 @@ export default function Home() {
 
   // fetch news from bing news api using axios and endpoint in proxy server in next.config.js
   const fetchNews = async () => {
-    console.log("fetching");
     setNewsLoaded(true);
     const cacheKey = `news-${category}-${searchQuery}-${page}-${sort}-${freshness}`;
     const cachedData: NewsItem[] | undefined = cache.get(cacheKey);
@@ -129,10 +128,16 @@ export default function Home() {
     }
   };
 
+  /* eslint-disable no-use-before-define */
+  let useeffectcalled = false; // prevent useEffect from running on initial render
+  // useEffect to fetch news on initial render and when category or search query or page number or sort by changes
   useEffect(() => {
+    if (!useeffectcalled || debouncedQuery) {
+      useeffectcalled = true;
       console.log("Made with ❤️ by @sauravhathi");
       fetchNews();
-  }, [debouncedQuery, category, page, sort, freshness]);
+    }
+  }, [useeffectcalled, debouncedQuery, category, page, sort, freshness]);
 
   // handle search query
   const handleSearch = (e: any) => {
@@ -154,7 +159,6 @@ export default function Home() {
     }
     else {
       setCategory(e);
-      fetchNews();
     }
   };
 
@@ -313,8 +317,8 @@ export default function Home() {
                 </div>
               </div>
               <h1 className="text-2xl md:text-4xl font-bold mt-2 mb-4"
-                aria-label="today's news"
-              >Today's News</h1>
+                aria-label="today&apos;s news"
+              >Today&apos;s News</h1>
               {newsLoaded && (
                 <div className="my-2 flex flex-col items-center justify-center">
                   <svg
