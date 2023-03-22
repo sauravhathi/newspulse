@@ -1,38 +1,124 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# NewsPulse
 
-## Getting Started
+NewsPulse is a news website built using Nextjs, reactjs, tailwindcss, bing news api and node-cache. It displays top news articles from various categories, allows users to search news articles by keyword and filter news articles by category.
 
-First, run the development server:
+**Note:** For reducing the number of API calls, I have used node-cache to cache the API response for 1 hour. So, if you are not getting the latest news articles, please wait for 1 hour or reload the page.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+## Demo
+
+[https://newspulse.vercel.app/](https://newspulse.vercel.app/)
+
+## Features
+
+- Top news articles from various categories
+- Search news articles by keyword
+- Filter news articles by category
+- Pagination
+- Sort news articles by date
+- Responsive design
+
+## Tech Stack
+
+ **Client:** Next.js, React, TailwindCSS, Axios(for API calls) and Node-Cache(for caching)
+
+## Run Locally
+
+Clone the project
+
+  ```bash
+  git clone https://github.com/sauravhathi/newspulse.git
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Go to the project directory
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+  ```bash
+  cd newspulse
+```
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+Install dependencies
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+  ```bash
+  npm install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Start the server
 
-## Learn More
+  ```bash
+  npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Methods
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+#### Debounce
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+  ```javascript
+const debounce = (func, delay) => {
+  let inDebounce;
+  return function () {
+    const context = this;
+    const args = arguments;
+    clearTimeout(inDebounce);
+    inDebounce = setTimeout(() => func.apply(context, args), delay);
+  };
+};
+```
 
-## Deploy on Vercel
+#### Get news articles
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+  ```javascript
+export const getNews = async (category, sort, page) => {
+  const res = await axios.get(
+    `/news/search?q=${category || searchQuery}&sortby=${sort}&offset=${page*10}&count=10`,
+    {
+      headers: {
+        'Ocp-Apim-Subscription-Key': process.env.NEXT_PUBLIC_BING_NEWS_API,
+      },
+    }
+  );
+  return res.data;
+};
+```
+## API Reference
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+#### Get top news articles
+
+  ```http
+  GET /news/search/
+```
+
+| Parameter | Type | Description |
+| : -------- | : ------- | : ------------------------- |
+| `q` | `string` | **Required**. Search query |
+| `sortby` | `string` | **Required**. Sort by date |
+| `offset` | `number` | **Required**. Offset |
+| `freshness` | `string` | **Required**. Freshness |
+| `headlinecount` | `number` | **Required**. Headline count |
+
+#### Get news articles by keyword
+
+  ```http
+  GET /news/search?q=${keyword}
+```
+
+#### Get news articles by category and sort by date
+
+  ```http
+  GET /news/search?q=${category}&sortby=${sort}
+```
+
+#### Get news articles by category and sort by date and pagination
+
+  ```http
+  GET /news/search?q=${category}&sortby=${sort}&offset=${page*10}&count=10
+```
+
+## Environment Variables
+
+To run this project, you will need to add the following environment variables to your .env.local file
+
+`NEXT_PUBLIC_BING_NEWS_API = 'YOUR_BING_NEWS_API_KEY'`
+`NEXT_PUBLIC_SITE_NAME = 'YOUR_SITE_NAME'`
+
+## Authors
+
+- [@sauravhathi](https://www.github.com/sauravhathi)
