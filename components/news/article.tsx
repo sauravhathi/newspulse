@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import { NewsItem } from './utility/newsTypes'
-import { dateFormat } from './utility/dateFormat'
-import ImageBlur from './utility/imageBlur'
+import { NewsItem } from '../data/newsTypes'
+import { dateFormat } from '../utility/dateFormat'
+import ImageBlur from '../utility/imageBlur'
 
 function Article({ news }: { news: NewsItem[] }) {
   const [onHover, setOnHover] = useState(-1)

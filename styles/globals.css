@@ -4,10 +4,10 @@
 
 @layer utilities {
     .container-news{
-        @apply flex flex-col items-center justify-center min-h-screen py-2;
+        @apply flex flex-col items-center justify-center min-h-screen;
     }
     article{
-        @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4;
+        @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:pt-4 md:pb-8 pt-2 pb-4;
     }
     .flex-wc{
         @apply flex flex-wrap items-center;
@@ -26,10 +26,6 @@
 
     .xl-b {
         @apply text-xl font-bold;
-    }
-
-    footer {
-        @apply flex items-center justify-center w-full h-24 border-t;
     }
 
     main {
