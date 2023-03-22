@@ -2,7 +2,7 @@
 
 NewsPulse is a news website built using Nextjs, reactjs, tailwindcss, bing news api and node-cache. It displays top news articles from various categories, allows users to search news articles by keyword and filter news articles by category.
 
-**Note:** For reducing the number of API calls, I have used node-cache to cache the API response for 1 hour. So, if you are not getting the latest news articles, please wait for 1 hour or reload the page.
+**Note:** For reducing the number of API calls, I have used node-cache to cache the API response for 1 hour. So, if you are not getting the latest news articles, please wait for 1 hour or reload the page. Image Optimizations of becouse on vercel free plan quota is limited to 1000 images only if you want to use image optimization remove `unoptimized: true` from next.config.js file.
 
 ## Demo
 
